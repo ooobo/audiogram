@@ -4,6 +4,8 @@ var d3 = require("d3"),
     video = require("./video.js"),
     audio = require("./audio.js");
 
+// wrap themes function so we can call it when saving live theme editor options
+function themes() {
 d3.json("/settings/themes.json", function(err, themes){
 
   var errorMessage;
@@ -34,6 +36,8 @@ d3.json("/settings/themes.json", function(err, themes){
   preloadImages(themes);
 
 });
+}
+themes();
 
 function submitted() {
 
@@ -174,6 +178,9 @@ function initialize(err, themesWithImages) {
   // If there's an initial piece of audio (e.g. back button) load it
   d3.select("#input-audio").on("change", updateAudioFile).each(updateAudioFile);
 
+  // Load updated custom background image if there is one
+  d3.select("#input-image").on("change", updateImageFile);
+
   d3.select("#return").on("click", function(){
     d3.event.preventDefault();
     video.kill();
@@ -182,6 +189,23 @@ function initialize(err, themesWithImages) {
 
   d3.select("#submit").on("click", submitted);
 
+}
+
+function updateImageFile() {
+  var formData = new FormData();
+  formData.append("image", $("#input-image")[0].files[0]);
+  $.ajax({
+    url: "/photo/",
+    type: "POST",
+    data: formData,
+    contentType: false,
+    dataType: "json",
+    cache: false,
+    processData: false,
+    success: function(data){
+      themes();
+    }
+  });
 }
 
 function updateAudioFile() {
@@ -260,7 +284,8 @@ function preloadImages(themes) {
       return cb(null, theme);
     };
 
-    theme.backgroundImageFile.src = "/settings/backgrounds/" + theme.backgroundImage;
+    theme.backgroundImageFile.src = "/settings/backgrounds/" + theme.backgroundImage + '?' + +new Date();
+
 
   }
 
