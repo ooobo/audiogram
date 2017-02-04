@@ -26,6 +26,7 @@
     "captionLeft": 100,
     "captionRight": 1180,
     "captionTop": 280,
+    "captionBottom": 500,
     "waveColor": "#000000",
     "pattern": "curve",
     "framesPerSecond": 20,
@@ -34,7 +35,7 @@
     "waveBottom": 680,
     "waveLeft": 0,
     "waveRight": 1280,
-    "backgroundImage": 0
+    "backgroundImage": "custom.png"
   },
   "Basic": {
     "backgroundColor": "#eee",

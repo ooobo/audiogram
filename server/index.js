@@ -46,6 +46,20 @@ if (serverSettings.maxUploadSize) {
   };
 }
 
+// Add imageStorage for custom background image upload, saves as custom.png
+var imageStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './settings/backgrounds/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, 'custom.png');
+  }
+})
+
+app.post("/image/", multer({storage: imageStorage}).single('image'), function(req, res) {
+  res.json({});
+});
+
 // On submission, check upload, validate input, and start generating a video
 app.post("/submit/", [multer(fileOptions).single("audio"), render.validate, render.route]);
 
