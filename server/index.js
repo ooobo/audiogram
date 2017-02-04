@@ -4,6 +4,8 @@ var express = require("express"),
     path = require("path"),
     multer = require("multer"),
     uuid = require("uuid"),
+	bodyParser = require("body-parser"),
+	jsonfile = require("jsonfile"),
     mkdirp = require("mkdirp");
 
 // Routes and middleware
@@ -63,6 +65,23 @@ if (serverSettings.fonts) {
 // Check the status of a current video
 app.get("/status/:id/", status);
 
+// Parse changes to Custom theme
+app.use(bodyParser.json());
+
+app.post("/save-settings/", function(req, res) {
+  jsonfile.readFile('./settings/themes.json', function(err, theme) {
+    for (var key in req.body) {
+      var val = req.body[key];
+      req.body[key] = !isNaN(Number(val)) ? Number(val) : val;
+    }
+
+    theme.Custom = req.body;
+    jsonfile.writeFile('./settings/themes.json', theme, {spaces: 2}, function(err) {
+      if (err) res.json({error: true});
+      res.json({});
+    });
+  });
+});
 
 // Serve background images and themes JSON statically
 app.use("/settings/", function(req, res, next) {

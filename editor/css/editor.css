@@ -141,6 +141,8 @@ select {
   padding: 6px;
 }
 
+select,
+input[type='number'] ,
 input[type='text'] {
   width: 100%;
   padding: 6px;
@@ -149,6 +151,12 @@ input[type='text'] {
   border: 1px solid #ddd;
   border-radius: 4px;
   box-shadow: 0 0 0 0;
+  height:  35px;
+}
+
+input[type='color']  {
+  width:  100%;
+  height:  35px;
 }
 
 /* Preview canvas */
@@ -300,4 +308,31 @@ g.time line {
     transform: scaleY(1.0);
     -webkit-transform: scaleY(1.0);
   }
+}
+
+label {
+  font-weight: bold;
+}
+
+.u__hidden {
+  display: none !important;
+}
+
+.table-form td {
+  padding-top:  5px;
+  padding-right: 20px;
+  width: 33.33%;
+  box-sizing: border-box;
+}
+
+.table-form td input {
+  margin-top: 5px;
+}
+
+.table-form td:last-child {
+  padding-right:  0;
+}
+
+.btn__save {
+  margin-top: 8px;
 }

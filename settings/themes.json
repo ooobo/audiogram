@@ -15,6 +15,27 @@
     "captionLeft": 200,
     "captionRight": 1080
   },
+  "Custom": {
+    "width": 1280,
+    "height": 720,
+    "captionColor": "#000000",
+    "captionFont": "400 96px 'Source Sans Pro'",
+    "captionAlign": "center",
+    "captionLineHeight": 52,
+    "captionLineSpacing": 7,
+    "captionLeft": 100,
+    "captionRight": 1180,
+    "captionTop": 280,
+    "waveColor": "#000000",
+    "pattern": "curve",
+    "framesPerSecond": 20,
+    "samplesPerFrame": 28,
+    "waveTop": 500,
+    "waveBottom": 680,
+    "waveLeft": 0,
+    "waveRight": 1280,
+    "backgroundImage": 0
+  },
   "Basic": {
     "backgroundColor": "#eee",
     "foregroundColor": "#de1e3d"

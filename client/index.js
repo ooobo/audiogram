@@ -4,6 +4,8 @@ var d3 = require("d3"),
     video = require("./video.js"),
     audio = require("./audio.js");
 
+// wrap themes function so we can call it when saving live theme editor options
+function themes() {
 d3.json("/settings/themes.json", function(err, themes){
 
   var errorMessage;
@@ -30,10 +32,17 @@ d3.json("/settings/themes.json", function(err, themes){
   for (var key in themes) {
     themes[key] = $.extend({}, themes.default, themes[key]);
   }
-
+  
+  // Populate live theme editor with Custom theme options JSON data
+  $.each(themes.Custom, function(key, value){
+    $('[name='+key+']', $('#row-settings')).val(value);
+  });
+  
   preloadImages(themes);
 
 });
+}
+themes();
 
 function submitted() {
 
@@ -181,6 +190,7 @@ function initialize(err, themesWithImages) {
   });
 
   d3.select("#submit").on("click", submitted);
+  d3.select("#save").on("click", saveSettings); // save button for theme editor
 
 }
 
@@ -300,4 +310,23 @@ function statusMessage(result) {
       return JSON.stringify(result);
   }
 
+}
+
+// Save live theme editor settings
+function saveSettings() {
+  var form = {};
+  $('#row-settings input, #row-settings select').each(function() {
+    form[$(this).attr('name')] = $(this).val();
+  });
+
+  $.ajax({
+    url: "/save-settings/",
+    type: "POST",
+    data: JSON.stringify(form),
+    contentType: "application/json",
+    dataType: 'json',
+    success: function(data) {
+      themes();
+    }
+  });
 }
