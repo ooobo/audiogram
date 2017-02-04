@@ -195,7 +195,7 @@ function updateImageFile() {
   var formData = new FormData();
   formData.append("image", $("#input-image")[0].files[0]);
   $.ajax({
-    url: "/photo/",
+    url: "/image/",
     type: "POST",
     data: formData,
     contentType: false,
